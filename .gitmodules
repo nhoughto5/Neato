@@ -1,0 +1,3 @@
+[submodule "Neato/vendor/spdlog"]
+	path = Neato/vendor/spdlog
+	url = https://github.com/gabime/spdlog
