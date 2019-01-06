@@ -13,14 +13,14 @@ project "Neato"
 	location "Neato"
 	kind "SharedLib"
 	language "C++"
-	targetdir ("bin" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int" .. outputdir .. "/%{prj.name}")
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 	files
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
 	}
-	include
+	includedirs
 	{
 		"%{prj.name}/vendor/spdlog/include"
 	}
@@ -33,7 +33,7 @@ project "Neato"
 			"NEATO_PLATFORM_WINDOWS",
 			"NEATO_BUILD_DLL"
 		}
-		postbuildcommnads
+		postbuildcommands
 		{
 			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
 		}
@@ -53,16 +53,16 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	targetdir ("bin" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int" .. outputdir .. "/%{prj.name}")
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 	files
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
 	}
-	include
+	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include",
+		"Neato/vendor/spdlog/include",
 		"Neato/src"
 	}
 
