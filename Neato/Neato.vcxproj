@@ -143,6 +143,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Neato\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\Neato\Events\Event.h" />
+    <ClInclude Include="src\Neato\Events\KeyEvent.h" />
+    <ClInclude Include="src\Neato\Events\MouseEvent.h" />
     <ClInclude Include="src\Neato.h" />
     <ClInclude Include="src\Neato\Application.h" />
     <ClInclude Include="src\Neato\Core.h" />

@@ -19,6 +19,10 @@
     <ClInclude Include="src\Neato\Log.h">
       <Filter>Neato</Filter>
     </ClInclude>
+    <ClInclude Include="src\Neato\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\Neato\Events\Event.h" />
+    <ClInclude Include="src\Neato\Events\KeyEvent.h" />
+    <ClInclude Include="src\Neato\Events\MouseEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Neato\Application.cpp">

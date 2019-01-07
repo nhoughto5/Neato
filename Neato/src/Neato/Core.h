@@ -8,3 +8,5 @@
 #else
     #error Neato Only Supports Windows!
 #endif //NEATO_PLATFORM_WINDOWS
+
+#define BIT(x) (1 << x)
