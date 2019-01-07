@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NEATO_PLATFORM_WINDOWS;NEATO_BUILD_DLL;NEATO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -99,7 +99,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NEATO_PLATFORM_WINDOWS;NEATO_BUILD_DLL;NEATO_Release;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -123,7 +123,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NEATO_PLATFORM_WINDOWS;NEATO_BUILD_DLL;NEATO_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -143,14 +143,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Neato\Events\ApplicationEvent.h" />
-    <ClInclude Include="src\Neato\Events\Event.h" />
-    <ClInclude Include="src\Neato\Events\KeyEvent.h" />
-    <ClInclude Include="src\Neato\Events\MouseEvent.h" />
     <ClInclude Include="src\Neato.h" />
     <ClInclude Include="src\Neato\Application.h" />
     <ClInclude Include="src\Neato\Core.h" />
     <ClInclude Include="src\Neato\EntryPoint.h" />
+    <ClInclude Include="src\Neato\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\Neato\Events\Event.h" />
+    <ClInclude Include="src\Neato\Events\KeyEvent.h" />
+    <ClInclude Include="src\Neato\Events\MouseEvent.h" />
     <ClInclude Include="src\Neato\Log.h" />
   </ItemGroup>
   <ItemGroup>

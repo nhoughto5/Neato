@@ -4,6 +4,9 @@
     <Filter Include="Neato">
       <UniqueIdentifier>{BC85BB0D-289A-E3BE-F11B-871E5DEFDFEF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Neato\Events">
+      <UniqueIdentifier>{20E6C16C-0C49-5111-B5CE-89C7A1101D94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Neato.h" />
@@ -16,13 +19,21 @@
     <ClInclude Include="src\Neato\EntryPoint.h">
       <Filter>Neato</Filter>
     </ClInclude>
+    <ClInclude Include="src\Neato\Events\ApplicationEvent.h">
+      <Filter>Neato\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Neato\Events\Event.h">
+      <Filter>Neato\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Neato\Events\KeyEvent.h">
+      <Filter>Neato\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Neato\Events\MouseEvent.h">
+      <Filter>Neato\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Neato\Log.h">
       <Filter>Neato</Filter>
     </ClInclude>
-    <ClInclude Include="src\Neato\Events\ApplicationEvent.h" />
-    <ClInclude Include="src\Neato\Events\Event.h" />
-    <ClInclude Include="src\Neato\Events\KeyEvent.h" />
-    <ClInclude Include="src\Neato\Events\MouseEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Neato\Application.cpp">
