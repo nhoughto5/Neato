@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace Neato {
 
     class NEATO_API WindowResizeEvent : public Event

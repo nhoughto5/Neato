@@ -1,8 +1,6 @@
 #pragma once
-
+#include "NeatoPCH.h"
 #include "Neato/Core.h"
-#include <string>
-#include <functional>
 
 namespace Neato {
     enum class EventType

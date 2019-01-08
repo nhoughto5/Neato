@@ -1,6 +1,6 @@
 #pragma once
 #include "Event.h"
-#include <sstream>
+
 namespace Neato {
     class NEATO_API MouseMovedEvent : public Event
     {
