@@ -9,6 +9,12 @@ workspace "Neato"
 	}
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+IncludeDir = {}
+IncludeDir["GLFW"] = "Neato/vendor/GLFW/include"
+
+-- Copies the premake5.lua file in the GLFW repo
+include "Neato/vendor/GLFW"
+
 project "Neato"
 	location "Neato"
 	kind "SharedLib"
@@ -25,8 +31,15 @@ project "Neato"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
 	}
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
+	}
+
 	filter "system:windows"
 		cppdialect "C++17"
 		staticruntime "On"
