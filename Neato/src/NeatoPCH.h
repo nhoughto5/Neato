@@ -12,6 +12,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "Neato/Log.h"
+
 #ifdef NEATO_PLATFORM_WINDOWS
     #include <Windows.h>
 #endif // NEATO_PLATFORM_WINDOWS

@@ -34,7 +34,11 @@
     <ClInclude Include="src\Neato\Log.h">
       <Filter>Neato</Filter>
     </ClInclude>
+    <ClInclude Include="src\Neato\Window.h">
+      <Filter>Neato</Filter>
+    </ClInclude>
     <ClInclude Include="src\NeatoPCH.h" />
+    <ClInclude Include="WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Neato\Application.cpp">
@@ -44,5 +48,6 @@
       <Filter>Neato</Filter>
     </ClCompile>
     <ClCompile Include="src\NeatoPCH.cpp" />
+    <ClCompile Include="WindowsWindow.cpp" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
 [submodule "Neato/vendor/spdlog"]
 	path = Neato/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+	ignore = dirty
 [submodule "Neato/vendor/GLFW"]
 	path = Neato/vendor/GLFW
 	url = https://github.com/nhoughto5/glfw.git
+	ignore = dirty
