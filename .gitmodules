@@ -6,3 +6,7 @@
 	path = Neato/vendor/GLFW
 	url = https://github.com/nhoughto5/glfw.git
 	ignore = dirty
+[submodule "Neato/vendor/imgui"]
+	path = Neato/vendor/imgui
+	url = https://github.com/nhoughto5/imgui.git
+	ignore = dirty

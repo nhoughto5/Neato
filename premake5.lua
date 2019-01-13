@@ -11,9 +11,12 @@ workspace "Neato"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Neato/vendor/GLFW/include"
-
+IncludeDir["Glad"] = "Neato/vendor/Glad/include"
+IncludeDir["ImGui"] = "Neato/vendor/imgui"
 -- Copies the premake5.lua file in the GLFW repo
 include "Neato/vendor/GLFW"
+include "Neato/vendor/Glad"
+include "Neato/vendor/imgui"
 
 project "Neato"
 	location "Neato"
@@ -32,12 +35,16 @@ project "Neato"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
 	}
 	links
 	{
 		"GLFW",
-		"opengl32.lib"
+		"Glad",
+		"opengl32.lib",
+		"ImGui"
 	}
 
 	filter "system:windows"
@@ -47,22 +54,23 @@ project "Neato"
 		defines
 		{
 			"NEATO_PLATFORM_WINDOWS",
-			"NEATO_BUILD_DLL"
+			"NEATO_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-		}
+
 	filter "configurations:Debug"
 		defines "NEATO_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines "NEATO_Release"
+		defines "NEATO_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "NEATO_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 project "Sandbox"
@@ -93,17 +101,24 @@ project "Sandbox"
 		systemversion "latest"
 		defines
 		{
-			"NEATO_PLATFORM_WINDOWS"
+			"NEATO_PLATFORM_WINDOWS",
+		}
+		postbuildcommands
+		{
+			("{COPY} ../bin/" .. outputdir .. "/Neato/Neato.dll" .. " ../bin/" .. outputdir .. "/%{prj.name}")
 		}
 
 	filter "configurations:Debug"
 		defines "NEATO_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines "NEATO_Release"
+		defines "NEATO_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "NEATO_DIST"
+		buildoptions "/MD"
 		optimize "On"

@@ -7,6 +7,18 @@
     <Filter Include="Neato\Events">
       <UniqueIdentifier>{20E6C16C-0C49-5111-B5CE-89C7A1101D94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Neato\ImGui">
+      <UniqueIdentifier>{E657582A-520D-D11F-DB01-CBF647B6C723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Neato.h" />
@@ -31,6 +43,15 @@
     <ClInclude Include="src\Neato\Events\MouseEvent.h">
       <Filter>Neato\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Neato\ImGui\ImGuiLayer.h">
+      <Filter>Neato\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Neato\Layer.h">
+      <Filter>Neato</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Neato\LayerStack.h">
+      <Filter>Neato</Filter>
+    </ClInclude>
     <ClInclude Include="src\Neato\Log.h">
       <Filter>Neato</Filter>
     </ClInclude>
@@ -38,16 +59,35 @@
       <Filter>Neato</Filter>
     </ClInclude>
     <ClInclude Include="src\NeatoPCH.h" />
-    <ClInclude Include="WindowsWindow.h" />
+    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Neato\Application.cpp">
+      <Filter>Neato</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Neato\ImGui\ImGuiLayer.cpp">
+      <Filter>Neato\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Neato\Layer.cpp">
+      <Filter>Neato</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Neato\LayerStack.cpp">
       <Filter>Neato</Filter>
     </ClCompile>
     <ClCompile Include="src\Neato\Log.cpp">
       <Filter>Neato</Filter>
     </ClCompile>
     <ClCompile Include="src\NeatoPCH.cpp" />
-    <ClCompile Include="WindowsWindow.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
