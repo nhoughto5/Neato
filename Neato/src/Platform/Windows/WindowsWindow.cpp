@@ -3,6 +3,7 @@
 #include "Neato/Events/ApplicationEvent.h"
 #include "Neato/Events/KeyEvent.h"
 #include "Neato/Events/MouseEvent.h"
+#include "Platform/OpenGL/ImGuiOpenGLRenderer.h"
 #include <glad/glad.h>
 
 namespace Neato {
@@ -65,6 +66,14 @@ namespace Neato {
 			data.EventCallback(event);
 		});
 
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
+		{
+			auto& data = *((WindowData*)glfwGetWindowUserPointer(window));
+
+			KeyTypedEvent event((int)keycode);
+			data.EventCallback(event);
+		});
+
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -78,31 +87,31 @@ namespace Neato {
 
 			switch (action)
 			{
-			case GLFW_PRESS:
-			{
-				KeyPressedEvent event(key, 0);
-				data.EventCallback(event);
-				break;
-			}
-			case GLFW_RELEASE:
-			{
-				KeyReleasedEvent event(key);
-				data.EventCallback(event);
-				break;
-			}
-			case GLFW_REPEAT:
-			{
-				KeyPressedEvent event(key, 1);
-				data.EventCallback(event);
-				break;
-			}
+				case GLFW_PRESS:
+				{
+					KeyPressedEvent event(key, 0);
+					data.EventCallback(event);
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					KeyReleasedEvent event(key);
+					data.EventCallback(event);
+					break;
+				}
+				case GLFW_REPEAT:
+				{
+					KeyPressedEvent event(key, 1);
+					data.EventCallback(event);
+					break;
+				}
 			}
 		});
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-
+			ImGuiIO& io = ImGui::GetIO();
 			switch (action)
 			{
 				case GLFW_PRESS:
