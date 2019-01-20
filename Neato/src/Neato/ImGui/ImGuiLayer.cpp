@@ -95,7 +95,7 @@ namespace Neato
 	bool ImGuiLayer::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent & e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		io.MouseReleased[e.GetMouseButton()] = false;
+		io.MouseDown[e.GetMouseButton()] = false;
 		return false;
 	}
 
