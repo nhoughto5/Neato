@@ -25,6 +25,8 @@ namespace Neato {
 		bool OnKeyTypedEvent(KeyTypedEvent& e);
 		bool OnWindowResizeEvent(WindowResizeEvent& e);
 
+		static void SetClipboardText(void* user_data, const char* text);
+		static const char* GetClipboardText(void* user_data);
 		float m_Time = 0.0f;
 	};
 }

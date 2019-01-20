@@ -123,6 +123,9 @@ namespace Neato
 		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
 		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
 		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+
+		io.SetClipboardTextFn = SetClipboardText;
+		io.GetClipboardTextFn = GetClipboardText;
 		return false;
 	}
 
@@ -132,6 +135,7 @@ namespace Neato
 		io.KeysDown[e.GetKeyCode()] = false;
 		return false;
 	}
+
 	bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent & e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -141,6 +145,7 @@ namespace Neato
 		}
 		return false;
 	}
+
 	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent & e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -148,5 +153,15 @@ namespace Neato
 		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
 		glViewport(0, 0, e.GetWidth(), e.GetHeight());
 		return false;
+	}
+
+	void ImGuiLayer::SetClipboardText(void * user_data, const char * text)
+	{
+		glfwSetClipboardString((GLFWwindow*)user_data, text);
+	}
+
+	const char* ImGuiLayer::GetClipboardText(void * user_data)
+	{
+		return glfwGetClipboardString((GLFWwindow*)user_data);
 	}
 }
