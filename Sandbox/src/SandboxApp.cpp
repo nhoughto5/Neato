@@ -11,7 +11,7 @@ public:
 
 	void OnUpdate() override
 	{
-		NEATO_INFO("ExampleLayer::Update");
+		//NEATO_INFO("ExampleLayer::Update");
 	}
 
 	void OnEvent(Neato::Event& event) override

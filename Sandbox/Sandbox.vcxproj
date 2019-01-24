@@ -82,8 +82,7 @@
       <AdditionalIncludeDirectories>..\Neato\vendor\spdlog\include;..\Neato\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -91,7 +90,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Neato\Neato.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Neato\Neato.dll ..\bin\Debug-windows-x86_64\$(ProjectName) &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Neato\Neato.dll ..\bin\Debug-windows-x86_64\$(ProjectName) &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Neato\Neato.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Neato\Neato.dll ..\bin\Debug-windows-x86_64\$(ProjectName) &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Neato\Neato.dll ..\bin\Debug-windows-x86_64\$(ProjectName) &gt; nul)
+IF EXIST ..\bin\Debug-windows-x86_64\Neato\Neato.pdb\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Neato\Neato.pdb ..\bin\Debug-windows-x86_64\$(ProjectName) &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Neato\Neato.pdb ..\bin\Debug-windows-x86_64\$(ProjectName) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -105,8 +105,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -115,7 +114,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\Neato\Neato.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Neato\Neato.dll ..\bin\Release-windows-x86_64\$(ProjectName) &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Neato\Neato.dll ..\bin\Release-windows-x86_64\$(ProjectName) &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Release-windows-x86_64\Neato\Neato.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Neato\Neato.dll ..\bin\Release-windows-x86_64\$(ProjectName) &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Neato\Neato.dll ..\bin\Release-windows-x86_64\$(ProjectName) &gt; nul)
+IF EXIST ..\bin\Release-windows-x86_64\Neato\Neato.pdb\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Neato\Neato.pdb ..\bin\Release-windows-x86_64\$(ProjectName) &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Neato\Neato.pdb ..\bin\Release-windows-x86_64\$(ProjectName) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -129,8 +129,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -139,7 +138,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Neato\Neato.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Neato\Neato.dll ..\bin\Dist-windows-x86_64\$(ProjectName) &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Neato\Neato.dll ..\bin\Dist-windows-x86_64\$(ProjectName) &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Neato\Neato.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Neato\Neato.dll ..\bin\Dist-windows-x86_64\$(ProjectName) &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Neato\Neato.dll ..\bin\Dist-windows-x86_64\$(ProjectName) &gt; nul)
+IF EXIST ..\bin\Dist-windows-x86_64\Neato\Neato.pdb\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Neato\Neato.pdb ..\bin\Dist-windows-x86_64\$(ProjectName) &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Neato\Neato.pdb ..\bin\Dist-windows-x86_64\$(ProjectName) &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

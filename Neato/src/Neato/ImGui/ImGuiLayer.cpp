@@ -119,6 +119,15 @@ namespace Neato
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[e.GetKeyCode()] = true;
+
+		if (e.GetKeyCode() == GLFW_KEY_DELETE || e.GetKeyCode() == GLFW_KEY_BACKSPACE)
+		{
+			NEATO_CORE_INFO("DELETE PRESSED");
+		}
+		else {
+			NEATO_CORE_INFO("DELETE PRESSED: " + e.GetKeyCode());
+		}
+
 		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
 		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
 		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];

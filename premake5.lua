@@ -26,6 +26,7 @@ project "Neato"
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 	pchheader "NeatoPCH.h"
 	pchsource "Neato/src/NeatoPCH.cpp"
+	staticruntime "off"
 	files
 	{
 		"%{prj.name}/src/**.h",
@@ -49,7 +50,6 @@ project "Neato"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 		defines
 		{
@@ -60,17 +60,17 @@ project "Neato"
 
 	filter "configurations:Debug"
 		defines "NEATO_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "NEATO_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "NEATO_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 project "Sandbox"
@@ -79,6 +79,7 @@ project "Sandbox"
 	language "C++"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	staticruntime "off"
 	files
 	{
 		"%{prj.name}/src/**.h",
@@ -97,7 +98,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 		defines
 		{
@@ -105,20 +105,21 @@ project "Sandbox"
 		}
 		postbuildcommands
 		{
-			("{COPY} ../bin/" .. outputdir .. "/Neato/Neato.dll" .. " ../bin/" .. outputdir .. "/%{prj.name}")
+			("{COPY} ../bin/" .. outputdir .. "/Neato/Neato.dll" .. " ../bin/" .. outputdir .. "/%{prj.name}"),
+			("{COPY} ../bin/" .. outputdir .. "/Neato/Neato.pdb" .. " ../bin/" .. outputdir .. "/%{prj.name}")
 		}
 
 	filter "configurations:Debug"
 		defines "NEATO_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "NEATO_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "NEATO_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
