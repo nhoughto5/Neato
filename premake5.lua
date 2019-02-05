@@ -14,9 +14,13 @@ IncludeDir["GLFW"] = "Neato/vendor/GLFW/include"
 IncludeDir["Glad"] = "Neato/vendor/Glad/include"
 IncludeDir["ImGui"] = "Neato/vendor/imgui"
 -- Copies the premake5.lua file in the GLFW repo
-include "Neato/vendor/GLFW"
-include "Neato/vendor/Glad"
-include "Neato/vendor/imgui"
+
+group "Dependencies"
+	include "Neato/vendor/GLFW"
+	include "Neato/vendor/Glad"
+	include "Neato/vendor/imgui"
+	
+group ""
 
 project "Neato"
 	location "Neato"
