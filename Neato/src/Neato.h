@@ -3,8 +3,11 @@
 
 #include "Neato/Application.h"
 #include <stdio.h>
+#include "Neato/Input.h"
 #include "Neato/Log.h"
 #include "Neato/Layer.h"
+#include "Neato/MouseButtonCodes.h"
+#include "Neato/KeyCodes.h"
 #include "Neato/ImGui/ImGuiLayer.h"
 
 // ===== Entry Point ==== //

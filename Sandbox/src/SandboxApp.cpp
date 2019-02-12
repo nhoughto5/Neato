@@ -18,7 +18,6 @@ public:
 	{
 		NEATO_TRACE("{0}", event);
 	}
-
 };
 
 
