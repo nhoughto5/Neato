@@ -13,6 +13,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Neato/vendor/GLFW/include"
 IncludeDir["Glad"] = "Neato/vendor/Glad/include"
 IncludeDir["ImGui"] = "Neato/vendor/imgui"
+IncludeDir["glm"] = "Neato/vendor/glm"
 -- Copies the premake5.lua file in the GLFW repo
 
 group "Dependencies"
@@ -34,7 +35,9 @@ project "Neato"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
 	includedirs
 	{
@@ -42,7 +45,8 @@ project "Neato"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 	links
 	{
@@ -92,7 +96,8 @@ project "Sandbox"
 	includedirs
 	{
 		"Neato/vendor/spdlog/include",
-		"Neato/src"
+		"Neato/src",
+		"%{IncludeDir.glm}"
 	}
 
 	links
