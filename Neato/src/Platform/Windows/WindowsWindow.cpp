@@ -3,8 +3,8 @@
 #include "Neato/Events/ApplicationEvent.h"
 #include "Neato/Events/KeyEvent.h"
 #include "Neato/Events/MouseEvent.h"
-#include "Platform/OpenGL/ImGuiOpenGLRenderer.h"
 #include <glad/glad.h>
+#include <imgui.h>
 
 namespace Neato {
 	static bool s_GLFWInitialized = false;

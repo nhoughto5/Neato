@@ -1,6 +1,6 @@
 #include <Neato.h>
 #include <stdio.h>
-
+#include "Neato/ImGui/ImGuiLayer.h"
 class ExampleLayer : public Neato::Layer
 {
 public:
@@ -18,6 +18,12 @@ public:
 	{
 		NEATO_TRACE("{0}", event);
 	}
+
+	virtual void OnImGuiRender() override {
+		ImGui::Begin("Test");
+		ImGui::Text("Hello");
+		ImGui::End();
+	}
 };
 
 
@@ -25,7 +31,6 @@ class Sandbox : public Neato::Application {
 public:
     Sandbox() {
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Neato::ImGuiLayer());
     }
 
     ~Sandbox() {

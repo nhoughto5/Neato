@@ -4,6 +4,7 @@
 #include "Neato/Events/ApplicationEvent.h"
 #include "Neato/LayerStack.h"
 #include "Window.h"
+#include "ImGui/ImGuiLayer.h"
 
 namespace Neato {
     class NEATO_API Application
@@ -23,6 +24,7 @@ namespace Neato {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;

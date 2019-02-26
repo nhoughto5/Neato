@@ -97,6 +97,7 @@ project "Sandbox"
 	{
 		"Neato/vendor/spdlog/include",
 		"Neato/src",
+		"Neato/vendor",
 		"%{IncludeDir.glm}"
 	}
 

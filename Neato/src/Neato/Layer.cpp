@@ -27,4 +27,8 @@ namespace Neato {
 	void Neato::Layer::OnEvent(Event& event)
 	{
 	}
+
+	void Layer::OnImGuiRender()
+	{
+	}
 }
