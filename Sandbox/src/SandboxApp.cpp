@@ -1,6 +1,6 @@
 #include <Neato.h>
 #include <stdio.h>
-#include "Neato/ImGui/ImGuiLayer.h"
+#include "imgui/imgui.h"
 class ExampleLayer : public Neato::Layer
 {
 public:

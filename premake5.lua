@@ -25,13 +25,16 @@ group ""
 
 project "Neato"
 	location "Neato"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	cppdialect "C++17"
+	staticruntime "on"
+
 	pchheader "NeatoPCH.h"
 	pchsource "Neato/src/NeatoPCH.cpp"
-	staticruntime "off"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 	files
 	{
 		"%{prj.name}/src/**.h",
@@ -39,6 +42,12 @@ project "Neato"
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
+	
+	defines
+	{
+		"_CRT_SECURE_NO_WARNINGS"
+	}
+	
 	includedirs
 	{
 		"%{prj.name}/src",
@@ -48,6 +57,7 @@ project "Neato"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}"
 	}
+	
 	links
 	{
 		"GLFW",
@@ -57,7 +67,6 @@ project "Neato"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 		defines
 		{
@@ -69,25 +78,28 @@ project "Neato"
 	filter "configurations:Debug"
 		defines "NEATO_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "NEATO_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "NEATO_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+	
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-	staticruntime "off"
+	
 	files
 	{
 		"%{prj.name}/src/**.h",
@@ -107,7 +119,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 		defines
 		{
@@ -115,21 +126,20 @@ project "Sandbox"
 		}
 		postbuildcommands
 		{
-			("{COPY} ../bin/" .. outputdir .. "/Neato/Neato.dll" .. " ../bin/" .. outputdir .. "/%{prj.name}"),
 			("{COPY} ../bin/" .. outputdir .. "/Neato/Neato.pdb" .. " ../bin/" .. outputdir .. "/%{prj.name}")
 		}
 
 	filter "configurations:Debug"
 		defines "NEATO_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "NEATO_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "NEATO_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"

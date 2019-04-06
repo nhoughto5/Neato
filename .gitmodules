@@ -9,6 +9,7 @@
 [submodule "Neato/vendor/imgui"]
 	path = Neato/vendor/imgui
 	url = https://github.com/nhoughto5/imgui.git
+	branch = docking
 	ignore = dirty
 [submodule "Neato/vendor/glm"]
 	path = Neato/vendor/glm
