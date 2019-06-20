@@ -16,7 +16,7 @@ public:
 
 	void OnEvent(Neato::Event& event) override
 	{
-		NEATO_TRACE("{0}", event);
+		//NEATO_TRACE("{0}", event);
 	}
 
 	virtual void OnImGuiRender() override {

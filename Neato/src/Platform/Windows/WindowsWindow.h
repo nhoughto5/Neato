@@ -1,6 +1,8 @@
 #pragma once
 #include "Neato/Window.h"
 #include <GLFW/glfw3.h>
+#include "Neato/Renderer/GraphicsContext.h"
+
 namespace Neato {
 	class WindowsWindow : public Window
 	{
@@ -24,6 +26,7 @@ namespace Neato {
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{
