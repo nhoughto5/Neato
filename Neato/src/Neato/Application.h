@@ -5,6 +5,7 @@
 #include "Neato/LayerStack.h"
 #include "Window.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Renderer/Buffer.h"
 #include "Neato/Renderer/Shader.h"
 
 namespace Neato {
@@ -30,8 +31,10 @@ namespace Neato {
 		LayerStack m_LayerStack;
 		static Application* s_Instance;
 
-		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		unsigned int m_VertexArray;
 		std::unique_ptr<Shader> m_Shader;
+		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
     };
 
     // To be defined in client
