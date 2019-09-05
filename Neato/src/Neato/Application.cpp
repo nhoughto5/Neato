@@ -8,24 +8,6 @@ namespace Neato {
     
 	Application* Application::s_Instance = nullptr;
 
-	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type) {
-		switch (type) {
-			case ShaderDataType::Float:		return GL_FLOAT;
-			case ShaderDataType::Float2:	return GL_FLOAT;
-			case ShaderDataType::Float3:	return GL_FLOAT;
-			case ShaderDataType::Float4:	return GL_FLOAT;
-			case ShaderDataType::Mat3:		return GL_FLOAT;
-			case ShaderDataType::Mat4:		return GL_FLOAT;
-			case ShaderDataType::Int:		return GL_INT;
-			case ShaderDataType::Int2:		return GL_INT;
-			case ShaderDataType::Int3:		return GL_INT;
-			case ShaderDataType::Int4:		return GL_INT;
-			case ShaderDataType::Bool:		return GL_BOOL;
-		}
-		NEATO_CORE_ASSERT(false, "Unknown ShaderDataType");
-		return 0;
-	}
-
 	Application::Application()
     {
 		NEATO_CORE_ASSERT(!s_Instance, "Multiple application instances");
@@ -34,9 +16,6 @@ namespace Neato {
 		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
-
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.1f, 0.4f, 1.0f,
@@ -53,17 +32,6 @@ namespace Neato {
 			};
 
 			m_VertexBuffer->SetLayout(layout);
-		}
-
-		uint32_t index = 0;
-		const auto& layout = m_VertexBuffer->GetLayout();
-		for (const auto& element : layout) {
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index, element.GetComponentCount(), 
-				ShaderDataTypeToOpenGLBaseType(element.Type), 
-				element.Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), 
-				(const void*)element.Offset);
-			++index;
 		}
 
 		uint32_t indices[3] = {
