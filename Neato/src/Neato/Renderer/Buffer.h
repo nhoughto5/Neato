@@ -55,6 +55,8 @@ namespace Neato {
 				case ShaderDataType::Int4:		return 4;
 				case ShaderDataType::Bool:		return 1;
 			}
+
+			return 0;
 		}
 	};
 

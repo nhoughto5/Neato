@@ -29,7 +29,7 @@ namespace Neato {
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
-		glBindVertexArray(0);
+		glDeleteVertexArrays(1, &m_RendererID);
 	}
 
 	void OpenGLVertexArray::Bind() const
@@ -44,8 +44,11 @@ namespace Neato {
 
 	void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
 	{
+		NEATO_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout");
+
 		glBindVertexArray(m_RendererID);
 		vertexBuffer->Bind();
+
 		uint32_t index = 0;
 		const auto& layout = vertexBuffer->GetLayout();
 		for (const auto& element : layout) {

@@ -17,27 +17,32 @@ namespace Neato {
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
+		m_VertexArray.reset(VertexArray::Create());
+
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.1f, 0.4f, 1.0f,
 			 0.5f, -0.5f, 0.0f, 0.0f, 0.6f, 0.2f, 1.0f,
 			 0.0f,  0.5f, 0.0f,	0.7f, 0.2f, 0.5f, 1.0f
 		};
 
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+		std::shared_ptr<VertexBuffer> vertexBuffer;
+		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 		
-		{
-			BufferLayout layout = {
-				{ShaderDataType::Float3, "a_Position"},
-				{ShaderDataType::Float4, "a_Color"}
-			};
+		BufferLayout layout = {
+			{ShaderDataType::Float3, "a_Position"},
+			{ShaderDataType::Float4, "a_Color"}
+		};
 
-			m_VertexBuffer->SetLayout(layout);
-		}
+		vertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = {
 			0,1,2
 		};
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		std::string vertexSrc = R"(
 			#version 330 core
@@ -67,6 +72,54 @@ namespace Neato {
 
 		m_Shader.reset(new Shader(vertexSrc, fragSrc));
 		m_Shader->Bind();
+
+		m_SquareVA.reset(VertexArray::Create());
+
+		float squareVert[3 * 4] = {
+			 -0.5f, -0.5f, 0.0f,
+			  0.5f, -0.5f, 0.0f,
+			  0.5f,  0.5f, 0.0f,
+			 -0.5f,  0.5f, 0.0f,
+		};
+
+		std::shared_ptr<VertexBuffer> squareVB;
+		squareVB.reset(VertexBuffer::Create(squareVert, sizeof(squareVert)));
+
+		BufferLayout layoutBlue = {
+			{ShaderDataType::Float3, "a_Position"}
+		};
+
+		squareVB->SetLayout(layoutBlue);
+		m_SquareVA->AddVertexBuffer(squareVB);
+
+		uint32_t squareInd[2 * 3] = {
+			0,1,2,2,3,0
+		};
+
+		std::shared_ptr<IndexBuffer> squareIB;
+		squareIB.reset(IndexBuffer::Create(squareInd, sizeof(squareInd) / sizeof(uint32_t)));
+		m_SquareVA->SetIndexBuffer(squareIB);
+
+		std::string blueVertexSrc = R"(
+			#version 330 core
+
+			layout(location=0) in vec3 a_Position;
+
+			void main() {
+				gl_Position = vec4(a_Position, 1.0);
+			}
+		)";
+
+		std::string blueFragSrc = R"(
+			#version 330 core
+			layout(location = 0) out vec4 color;
+			void main() {
+				color = vec4(0.2, 0.3, 0.85, 1.0);
+			}
+		)";
+
+		m_BlueShader.reset(new Shader(blueVertexSrc, blueFragSrc));
+		m_BlueShader->Bind();
 	}
 
     Application::~Application()
@@ -80,9 +133,13 @@ namespace Neato {
 			glClearColor(0.1f,0.1f,0.1f,1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			
-			glBindVertexArray(m_VertexArray);
-			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			m_BlueShader->Bind();
+			m_SquareVA->Bind();
+			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
+			m_Shader->Bind();
+			m_VertexArray->Bind();
+			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : m_LayerStack)
 			{
