@@ -1,13 +1,22 @@
 #include "NeatoPCH.h"
 #include "Renderer.h"
+#include "RenderCommand.h"
 
 namespace Neato {
-	RendererAPI Renderer::s_Renderer = RendererAPI::OpenGL;
-	Renderer::Renderer()
+
+	void Renderer::BeginScene()
 	{
+
 	}
 
-	Renderer::~Renderer()
+	void Renderer::EndScene()
 	{
+
+	}
+
+	void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray)
+	{
+		vertexArray->Bind();
+		RenderCommand::DrawIndexed(vertexArray);
 	}
 }

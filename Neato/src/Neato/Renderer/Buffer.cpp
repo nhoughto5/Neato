@@ -8,10 +8,10 @@ namespace Neato {
 	{
 		switch (Renderer::GetAPI()) 
 		{
-			case RendererAPI::None:
+			case RendererAPI::API::None:
 				NEATO_CORE_ASSERT(false, "RendererAPI::None not supported");
 				return nullptr;
-			case RendererAPI::OpenGL:
+			case RendererAPI::API::OpenGL:
 				return new OpenGLVertexBuffer(vertices, size);
 		}
 
@@ -23,10 +23,10 @@ namespace Neato {
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:
+		case RendererAPI::API::None:
 			NEATO_CORE_ASSERT(false, "RendererAPI::None not supported");
 			return nullptr;
-		case RendererAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 			return new OpenGLIndexBuffer(indices, count);
 		}
 
