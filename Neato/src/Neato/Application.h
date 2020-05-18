@@ -8,6 +8,7 @@
 #include "Renderer/Buffer.h"
 #include "Neato/Renderer/Shader.h"
 #include "Renderer/VertexArray.h"
+#include "Renderer/OrthographicCamera.h"
 
 namespace Neato {
     class NEATO_API Application
@@ -37,6 +38,8 @@ namespace Neato {
 
 		std::shared_ptr<Shader> m_BlueShader;
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		OrthographicCamera m_Camera;
 	};
 
     // To be defined in client
