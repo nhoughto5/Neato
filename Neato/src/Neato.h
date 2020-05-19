@@ -9,6 +9,15 @@
 #include "Neato/MouseButtonCodes.h"
 #include "Neato/KeyCodes.h"
 #include "Neato/ImGui/ImGuiLayer.h"
+#include "Neato/Events/KeyEvent.h"
+
+// ===== Renderer ==== //
+#include "Neato/Renderer/Renderer.h"
+#include "Neato/Renderer/RenderCommand.h"
+#include "Neato/Renderer/Buffer.h"
+#include "Neato/Renderer/Shader.h"
+#include "Neato/Renderer/VertexArray.h"
+#include "Neato/Renderer/OrthographicCamera.h"
 
 // ===== Entry Point ==== //
 #include "Neato/EntryPoint.h"
