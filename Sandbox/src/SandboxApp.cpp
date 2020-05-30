@@ -1,6 +1,8 @@
-#include <Neato.h>
+﻿#include <Neato.h>
 #include <stdio.h>
 #include "imgui/imgui.h"
+#include <glm/gtc/matrix_transform.hpp>
+
 class ExampleLayer : public Neato::Layer
 {
 public:
@@ -43,6 +45,7 @@ public:
 			layout(location=1) in vec4 a_Color;
 
 			uniform mat4 u_ProjectionView;
+			uniform mat4 u_Transform;
 
 			out vec3 v_Position;
 			out vec4 v_Color;
@@ -50,7 +53,7 @@ public:
 			void main() {
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = u_ProjectionView * vec4(a_Position, 1.0);
+				gl_Position = u_ProjectionView * u_Transform * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -71,10 +74,10 @@ public:
 		m_SquareVA.reset(Neato::VertexArray::Create());
 
 		float squareVert[3 * 4] = {
-			 -0.75f, -0.75f, 0.0f,
-			  0.75f, -0.75f, 0.0f,
-			  0.75f,  0.75f, 0.0f,
-			 -0.75f,  0.75f, 0.0f,
+			 -0.5f, -0.5f, 0.0f,
+			  0.5f, -0.5f, 0.0f,
+			  0.5f,  0.5f, 0.0f,
+			 -0.5f,  0.5f, 0.0f,
 		};
 
 		std::shared_ptr<Neato::VertexBuffer> squareVB;
@@ -100,9 +103,10 @@ public:
 
 			layout(location=0) in vec3 a_Position;
 			uniform mat4 u_ProjectionView;
+			uniform mat4 u_Transform;
 
 			void main() {
-				gl_Position = u_ProjectionView * vec4(a_Position, 1.0);
+				gl_Position = u_ProjectionView * u_Transform * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -142,7 +146,16 @@ public:
 		m_Camera.SetRotation(m_CameraRotation);
 
 		Neato::Renderer::BeginScene(m_Camera);
-		Neato::Renderer::Submit(m_BlueShader, m_SquareVA);
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+		for (int j = 0; j < 20; ++j) {
+			for (int i = 0; i < 20; ++i) {
+				glm::vec3 pos(i * 0.11f, 0.11f * j, 0.0f);
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+
+				Neato::Renderer::Submit(m_BlueShader, m_SquareVA, transform);
+			}
+		}
 		Neato::Renderer::Submit(m_Shader, m_VertexArray);
 		Neato::Renderer::EndScene();
 	}
@@ -160,9 +173,10 @@ private:
 
 	Neato::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
-	float m_CameraSpeed = 0.05f;
+	float m_CameraSpeed = 7.0f;
+	float m_SquareMoveSpeed = 1.0f;
 	float m_CameraRotation = 0.0f;
-	float m_CameraRotationSpeed = 0.65f;
+	float m_CameraRotationSpeed = 180.0f;
 };
 
 
