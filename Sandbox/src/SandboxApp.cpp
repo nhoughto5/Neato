@@ -98,7 +98,7 @@ public:
 		squareIB.reset(Neato::IndexBuffer::Create(squareInd, sizeof(squareInd) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
-		std::string blueVertexSrc = R"(
+		std::string flatColorVertrxSrc = R"(
 			#version 330 core
 
 			layout(location=0) in vec3 a_Position;
@@ -110,16 +110,19 @@ public:
 			}
 		)";
 
-		std::string blueFragSrc = R"(
+		std::string flatColorFragSrc = R"(
 			#version 330 core
+			uniform vec4 u_Color;
+
 			layout(location = 0) out vec4 color;
 			void main() {
-				color = vec4(0.2, 0.3, 0.85, 1.0);
+				//color = vec4(0.2, 0.3, 0.85, 1.0);
+				color = u_Color;
 			}
 		)";
 
-		m_BlueShader.reset(new Neato::Shader(blueVertexSrc, blueFragSrc));
-		m_BlueShader->Bind();
+		m_flatColorShader.reset(new Neato::Shader(flatColorVertrxSrc, flatColorFragSrc));
+		m_flatColorShader->Bind();
 	}
 
 	void OnUpdate(Neato::TimeStep ts) override
@@ -139,7 +142,7 @@ public:
 		else if (Neato::Input::IsKeyPressed(NEATO_KEY_E))
 			m_CameraRotation -= m_CameraRotationSpeed * ts;
 
-		Neato::RenderCommand::SetClearColor({ 0.1f, 0.2f, 0.1f, 1 });
+		Neato::RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.30f, 1 });
 		Neato::RenderCommand::Clear();
 
 		m_Camera.SetPosition(m_CameraPosition);
@@ -148,12 +151,22 @@ public:
 		Neato::Renderer::BeginScene(m_Camera);
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
+		glm::vec4 blueColor(0.2f, 0.3f, 0.85f, 1.0f);
+		glm::vec4 redColor(0.8f, 0.2f, 0.35f, 1.0f);
+
 		for (int j = 0; j < 20; ++j) {
 			for (int i = 0; i < 20; ++i) {
 				glm::vec3 pos(i * 0.11f, 0.11f * j, 0.0f);
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-
-				Neato::Renderer::Submit(m_BlueShader, m_SquareVA, transform);
+				if (i % 2 == 0)
+				{
+					m_flatColorShader->UploadUniformFloat4("u_Color", redColor);
+				}
+				else
+				{
+					m_flatColorShader->UploadUniformFloat4("u_Color", blueColor);
+				}
+				Neato::Renderer::Submit(m_flatColorShader, m_SquareVA, transform);
 			}
 		}
 		Neato::Renderer::Submit(m_Shader, m_VertexArray);
@@ -168,7 +181,7 @@ private:
 	std::shared_ptr<Neato::Shader> m_Shader;
 	std::shared_ptr<Neato::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Neato::Shader> m_BlueShader;
+	std::shared_ptr<Neato::Shader> m_flatColorShader;
 	std::shared_ptr<Neato::VertexArray> m_SquareVA;
 
 	Neato::OrthographicCamera m_Camera;
