@@ -27,13 +27,13 @@ namespace Neato {
 		inline Window& GetWindow() { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+	private:
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;
-
-
+		float m_LastFrameTime = 0.0f;
 	};
 
     // To be defined in client

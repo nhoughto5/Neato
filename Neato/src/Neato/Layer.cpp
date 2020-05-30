@@ -20,7 +20,7 @@ namespace Neato {
 	{
 	}
 
-	void Neato::Layer::OnUpdate()
+	void Neato::Layer::OnUpdate(TimeStep ts)
 	{
 	}
 

@@ -10,6 +10,7 @@
 #include "Neato/KeyCodes.h"
 #include "Neato/ImGui/ImGuiLayer.h"
 #include "Neato/Events/KeyEvent.h"
+#include "Neato/Core/TimeStep.h"
 
 // ===== Renderer ==== //
 #include "Neato/Renderer/Renderer.h"

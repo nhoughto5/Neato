@@ -118,22 +118,22 @@ public:
 		m_BlueShader->Bind();
 	}
 
-	void OnUpdate() override
+	void OnUpdate(Neato::TimeStep ts) override
 	{
 		if (Neato::Input::IsKeyPressed(NEATO_KEY_A))
-			m_CameraPosition.x -= m_CameraSpeed;
+			m_CameraPosition.x -= m_CameraSpeed * ts;
 		else if (Neato::Input::IsKeyPressed(NEATO_KEY_D))
-			m_CameraPosition.x += m_CameraSpeed;
+			m_CameraPosition.x += m_CameraSpeed * ts;
 
 		if (Neato::Input::IsKeyPressed(NEATO_KEY_S))
-			m_CameraPosition.y -= m_CameraSpeed;
+			m_CameraPosition.y -= m_CameraSpeed * ts;
 		else if (Neato::Input::IsKeyPressed(NEATO_KEY_W))
-			m_CameraPosition.y += m_CameraSpeed;
+			m_CameraPosition.y += m_CameraSpeed * ts;
 
 		if (Neato::Input::IsKeyPressed(NEATO_KEY_Q))
-			m_CameraRotation += m_CameraRotationSpeed;
+			m_CameraRotation += m_CameraRotationSpeed * ts;
 		else if (Neato::Input::IsKeyPressed(NEATO_KEY_E))
-			m_CameraRotation -= m_CameraRotationSpeed;
+			m_CameraRotation -= m_CameraRotationSpeed * ts;
 
 		Neato::RenderCommand::SetClearColor({ 0.1f, 0.2f, 0.1f, 1 });
 		Neato::RenderCommand::Clear();
