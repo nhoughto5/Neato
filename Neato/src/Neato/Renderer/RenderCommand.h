@@ -14,7 +14,7 @@ namespace Neato {
 			s_RendererAPI->Clear();
 		}
 
-		static inline void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) {
+		static inline void DrawIndexed(const Ref<VertexArray>& vertexArray) {
 			s_RendererAPI->DrawIndexed(vertexArray);
 		}
 	private:

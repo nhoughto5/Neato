@@ -21,7 +21,7 @@ public:
 			 0.0f,  0.5f, 0.0f,	0.7f, 0.2f, 0.5f, 1.0f
 		};
 
-		std::shared_ptr<Neato::VertexBuffer> vertexBuffer;
+		Neato::Ref<Neato::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Neato::VertexBuffer::Create(vertices, sizeof(vertices)));
 
 		Neato::BufferLayout layout = {
@@ -36,7 +36,7 @@ public:
 			0,1,2
 		};
 
-		std::shared_ptr<Neato::IndexBuffer> indexBuffer;
+		Neato::Ref<Neato::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Neato::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
@@ -82,7 +82,7 @@ public:
 			 -0.5f,  0.5f, 0.0f,
 		};
 
-		std::shared_ptr<Neato::VertexBuffer> squareVB;
+		Neato::Ref<Neato::VertexBuffer> squareVB;
 		squareVB.reset(Neato::VertexBuffer::Create(squareVert, sizeof(squareVert)));
 
 		Neato::BufferLayout layoutBlue = {
@@ -96,7 +96,7 @@ public:
 			0,1,2,2,3,0
 		};
 
-		std::shared_ptr<Neato::IndexBuffer> squareIB;
+		Neato::Ref<Neato::IndexBuffer> squareIB;
 		squareIB.reset(Neato::IndexBuffer::Create(squareInd, sizeof(squareInd) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
@@ -175,11 +175,11 @@ public:
 	}
 
 private:
-	std::shared_ptr<Neato::Shader> m_Shader;
-	std::shared_ptr<Neato::VertexArray> m_VertexArray;
+	Neato::Ref<Neato::Shader> m_Shader;
+	Neato::Ref<Neato::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Neato::Shader> m_flatColorShader;
-	std::shared_ptr<Neato::VertexArray> m_SquareVA;
+	Neato::Ref<Neato::Shader> m_flatColorShader;
+	Neato::Ref<Neato::VertexArray> m_SquareVA;
 
 	Neato::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
