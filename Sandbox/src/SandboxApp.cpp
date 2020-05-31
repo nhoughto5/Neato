@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "imgui/imgui.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "Platform/OpenGL/OpenGLShader.h"
+#include <glm/gtc/type_ptr.hpp>
 
 class ExampleLayer : public Neato::Layer
 {
@@ -68,7 +70,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(new Neato::Shader(vertexSrc, fragSrc));
+		m_Shader.reset(Neato::Shader::Create(vertexSrc, fragSrc));
 		m_Shader->Bind();
 
 		m_SquareVA.reset(Neato::VertexArray::Create());
@@ -112,16 +114,15 @@ public:
 
 		std::string flatColorFragSrc = R"(
 			#version 330 core
-			uniform vec4 u_Color;
+			uniform vec3 u_Color;
 
 			layout(location = 0) out vec4 color;
 			void main() {
-				//color = vec4(0.2, 0.3, 0.85, 1.0);
-				color = u_Color;
+				color = vec4(u_Color, 1.0);
 			}
 		)";
 
-		m_flatColorShader.reset(new Neato::Shader(flatColorVertrxSrc, flatColorFragSrc));
+		m_flatColorShader.reset(Neato::Shader::Create(flatColorVertrxSrc, flatColorFragSrc));
 		m_flatColorShader->Bind();
 	}
 
@@ -151,21 +152,15 @@ public:
 		Neato::Renderer::BeginScene(m_Camera);
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-		glm::vec4 blueColor(0.2f, 0.3f, 0.85f, 1.0f);
-		glm::vec4 redColor(0.8f, 0.2f, 0.35f, 1.0f);
+		std::dynamic_pointer_cast<Neato::OpenGLShader>(m_flatColorShader)->Bind();
+		std::dynamic_pointer_cast<Neato::OpenGLShader>(m_flatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+
+		NEATO_TRACE("Color: {0}, {1}, {2}", m_SquareColor.x, m_SquareColor.y, m_SquareColor.z);
 
 		for (int j = 0; j < 20; ++j) {
 			for (int i = 0; i < 20; ++i) {
 				glm::vec3 pos(i * 0.11f, 0.11f * j, 0.0f);
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-				if (i % 2 == 0)
-				{
-					m_flatColorShader->UploadUniformFloat4("u_Color", redColor);
-				}
-				else
-				{
-					m_flatColorShader->UploadUniformFloat4("u_Color", blueColor);
-				}
 				Neato::Renderer::Submit(m_flatColorShader, m_SquareVA, transform);
 			}
 		}
@@ -174,7 +169,9 @@ public:
 	}
 
 	virtual void OnImGuiRender() override {
-
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+		ImGui::End();
 	}
 
 private:
@@ -190,6 +187,8 @@ private:
 	float m_SquareMoveSpeed = 1.0f;
 	float m_CameraRotation = 0.0f;
 	float m_CameraRotationSpeed = 180.0f;
+
+	glm::vec3 m_SquareColor = {0.2f, 0.3f, 0.8f};
 };
 
 
