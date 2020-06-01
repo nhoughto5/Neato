@@ -17,6 +17,7 @@
 #include "Neato/Renderer/RenderCommand.h"
 #include "Neato/Renderer/Buffer.h"
 #include "Neato/Renderer/Shader.h"
+#include "Neato/Renderer/Texture.h"
 #include "Neato/Renderer/VertexArray.h"
 #include "Neato/Renderer/OrthographicCamera.h"
 

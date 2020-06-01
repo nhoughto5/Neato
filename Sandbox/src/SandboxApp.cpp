@@ -75,18 +75,19 @@ public:
 
 		m_SquareVA.reset(Neato::VertexArray::Create());
 
-		float squareVert[3 * 4] = {
-			 -0.5f, -0.5f, 0.0f,
-			  0.5f, -0.5f, 0.0f,
-			  0.5f,  0.5f, 0.0f,
-			 -0.5f,  0.5f, 0.0f,
+		float squareVert[5 * 4] = {
+			 -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 
+			  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			 -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		Neato::Ref<Neato::VertexBuffer> squareVB;
 		squareVB.reset(Neato::VertexBuffer::Create(squareVert, sizeof(squareVert)));
 
 		Neato::BufferLayout layoutBlue = {
-			{Neato::ShaderDataType::Float3, "a_Position"}
+			{Neato::ShaderDataType::Float3, "a_Position"},
+			{Neato::ShaderDataType::Float2, "a_TexCoord"}
 		};
 
 		squareVB->SetLayout(layoutBlue);
@@ -124,6 +125,42 @@ public:
 
 		m_flatColorShader.reset(Neato::Shader::Create(flatColorVertrxSrc, flatColorFragSrc));
 		m_flatColorShader->Bind();
+
+		std::string textureShaderVertrxSrc = R"(
+			#version 330 core
+
+			layout(location=0) in vec3 a_Position;
+			layout(location=1) in vec2 a_TexCoord;
+
+			uniform mat4 u_ProjectionView;
+			uniform mat4 u_Transform;
+
+			out vec2 v_TexCoord;
+		
+			void main() {
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ProjectionView * u_Transform * vec4(a_Position, 1.0);
+			}
+		)";
+
+		std::string textureShaderFragSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+
+			in vec2 v_TexCoord;
+			uniform sampler2D u_Texture;
+
+			void main() {
+				color = texture(u_Texture, v_TexCoord);
+			}
+		)";
+
+		m_TextureShader.reset(Neato::Shader::Create(textureShaderVertrxSrc, textureShaderFragSrc));
+
+		m_Texture = Neato::Texture2D::Create("assets/textures/Checkerboard.png");
+		std::dynamic_pointer_cast<Neato::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<Neato::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Neato::TimeStep ts) override
@@ -164,7 +201,11 @@ public:
 				Neato::Renderer::Submit(m_flatColorShader, m_SquareVA, transform);
 			}
 		}
-		Neato::Renderer::Submit(m_Shader, m_VertexArray);
+
+		m_Texture->Bind();
+		Neato::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		//Neato::Renderer::Submit(m_flatColorShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		//Neato::Renderer::Submit(m_Shader, m_VertexArray);
 		Neato::Renderer::EndScene();
 	}
 
@@ -178,8 +219,9 @@ private:
 	Neato::Ref<Neato::Shader> m_Shader;
 	Neato::Ref<Neato::VertexArray> m_VertexArray;
 
-	Neato::Ref<Neato::Shader> m_flatColorShader;
+	Neato::Ref<Neato::Shader> m_flatColorShader, m_TextureShader;
 	Neato::Ref<Neato::VertexArray> m_SquareVA;
+	Neato::Ref<Neato::Texture2D> m_Texture;
 
 	Neato::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;

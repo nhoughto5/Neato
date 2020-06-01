@@ -14,6 +14,7 @@ IncludeDir["GLFW"] = "Neato/vendor/GLFW/include"
 IncludeDir["Glad"] = "Neato/vendor/Glad/include"
 IncludeDir["ImGui"] = "Neato/vendor/imgui"
 IncludeDir["glm"] = "Neato/vendor/glm"
+IncludeDir["stb_image"] = "Neato/vendor/stb_image"
 -- Copies the premake5.lua file in the GLFW repo
 
 group "Dependencies"
@@ -39,6 +40,8 @@ project "Neato"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
@@ -55,7 +58,8 @@ project "Neato"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 	
 	links
