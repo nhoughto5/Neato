@@ -2,10 +2,14 @@
 #include "glm/glm.hpp"
 #include "Neato/Renderer/Shader.h"
 
+// TODO: Remove! 
+typedef unsigned int GLenum;
+
 namespace Neato {
 	class OpenGLShader : public Shader
 	{
 	public:
+		OpenGLShader(const std::string& filePath);
 		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
 		virtual ~OpenGLShader();
 
@@ -22,6 +26,9 @@ namespace Neato {
 		void UploadUniformMat3(const std::string& name, const glm::mat3& matrix);
 		void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
 	private:
+		void Compile(std::unordered_map<GLenum, std::string>& shaderSources);
+		std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
+		std::string ReadFile(const std::string& filePath);
 		uint32_t mRendererID;
 	};
 }
