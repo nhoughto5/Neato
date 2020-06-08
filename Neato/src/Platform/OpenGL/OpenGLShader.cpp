@@ -18,12 +18,19 @@ namespace Neato {
 		std::string source = ReadFile(filePath);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
+
+        auto lastSlash = filePath.find_last_of("/\\");
+        lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+        auto lastDot = filePath.rfind('.');
+        auto count = lastDot == std::string::npos ? filePath.size() - lastSlash : lastDot - lastSlash;
+        m_Name = filePath.substr(lastSlash, count);
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc) {
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc) {
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;
 		sources[GL_FRAGMENT_SHADER] = fragmentSrc;
+        m_Name = name;
 		Compile(sources);
 	}
 
@@ -33,7 +40,9 @@ namespace Neato {
 
 	void OpenGLShader::Compile(std::unordered_map<GLenum, std::string>& shaderSources) {
 		GLint program = glCreateProgram();
-		std::vector<GLenum> glShaderIds(shaderSources.size());
+        NEATO_CORE_ASSERT(shaderSources.size() <= 2, "Only support two shaders");
+		std::array<GLenum, 2> glShaderIds;
+        int glShaderId = 0;
 		for (auto&&[type, source] : shaderSources) {
 			GLuint shader = glCreateShader(type);
 			const GLchar* sourceCStr = source.c_str();
@@ -63,7 +72,7 @@ namespace Neato {
 			}
 
 			glAttachShader(program, shader);
-			glShaderIds.push_back(shader);
+            glShaderIds[glShaderId++] = shader;
 		}
 
 		// Link our program
@@ -125,7 +134,7 @@ namespace Neato {
 	}
 
 	std::string OpenGLShader::ReadFile(const std::string& filePath) {
-		std::ifstream in(filePath, std::ios::in, std::ios::binary);
+		std::ifstream in(filePath, std::ios::in | std::ios::binary);
 		std::string result;
 
 		if (in) {

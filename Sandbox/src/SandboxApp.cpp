@@ -70,7 +70,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(Neato::Shader::Create(vertexSrc, fragSrc));
+		m_Shader = Neato::Shader::Create("traingleShader", vertexSrc, fragSrc);
 		m_Shader->Bind();
 
 		m_SquareVA.reset(Neato::VertexArray::Create());
@@ -123,15 +123,15 @@ public:
 			}
 		)";
 
-		m_flatColorShader.reset(Neato::Shader::Create(flatColorVertrxSrc, flatColorFragSrc));
+		m_flatColorShader = Neato::Shader::Create("flatColorShader", flatColorVertrxSrc, flatColorFragSrc);
 		m_flatColorShader->Bind();
 
-		m_TextureShader.reset(Neato::Shader::Create("assets/shaders/Texture.glsl"));
+        m_ShaderLib.Load("assets/shaders/Texture.glsl");
 
 		m_Texture = Neato::Texture2D::Create("assets/textures/Checkerboard.png");
 		m_TextureColours = Neato::Texture2D::Create("assets/textures/ChernoLogo.png");
-		std::dynamic_pointer_cast<Neato::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<Neato::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<Neato::OpenGLShader>(m_ShaderLib.Get("Texture"))->Bind();
+		std::dynamic_pointer_cast<Neato::OpenGLShader>(m_ShaderLib.Get("Texture"))->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Neato::TimeStep ts) override
@@ -174,10 +174,10 @@ public:
 		}
 
 		m_Texture->Bind();
-		Neato::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Neato::Renderer::Submit(m_ShaderLib.Get("Texture"), m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		m_TextureColours->Bind();
-		Neato::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Neato::Renderer::Submit(m_ShaderLib.Get("Texture"), m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		//Neato::Renderer::Submit(m_flatColorShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		//Neato::Renderer::Submit(m_Shader, m_VertexArray);
 		Neato::Renderer::EndScene();
@@ -190,10 +190,11 @@ public:
 	}
 
 private:
+    Neato::ShaderLibrary m_ShaderLib;
 	Neato::Ref<Neato::Shader> m_Shader;
 	Neato::Ref<Neato::VertexArray> m_VertexArray;
 
-	Neato::Ref<Neato::Shader> m_flatColorShader, m_TextureShader;
+	Neato::Ref<Neato::Shader> m_flatColorShader;
 	Neato::Ref<Neato::VertexArray> m_SquareVA;
 	Neato::Ref<Neato::Texture2D> m_Texture, m_TextureColours;
 
