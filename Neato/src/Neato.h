@@ -20,6 +20,7 @@
 #include "Neato/Renderer/Texture.h"
 #include "Neato/Renderer/VertexArray.h"
 #include "Neato/Renderer/OrthographicCamera.h"
+#include "Neato/OrthographicCameraController.h"
 
 // ===== Entry Point ==== //
 #include "Neato/EntryPoint.h"
