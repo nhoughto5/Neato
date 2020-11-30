@@ -5,13 +5,11 @@
 #include "Platform/OpenGL/OpenGLShader.h"
 #include <glm/gtc/type_ptr.hpp>
 
-class ExampleLayer : public Neato::Layer
-{
+class ExampleLayer : public Neato::Layer {
 public:
     ExampleLayer()
         : Layer("Example"),
-        m_CameraController(1280.0f / 720.0f)
-    {
+        m_CameraController(1280.0f / 720.0f) {
         m_VertexArray.reset(Neato::VertexArray::Create());
 
         float vertices[3 * 7] = {
@@ -133,8 +131,7 @@ public:
         std::dynamic_pointer_cast<Neato::OpenGLShader>(m_ShaderLib.Get("Texture"))->UploadUniformInt("u_Texture", 0);
     }
 
-    void OnUpdate(Neato::TimeStep ts) override
-    {
+    void OnUpdate(Neato::TimeStep ts) override {
         m_CameraController.OnUpdate(ts);
 
         Neato::RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.30f, 1 });
@@ -145,8 +142,6 @@ public:
 
         std::dynamic_pointer_cast<Neato::OpenGLShader>(m_flatColorShader)->Bind();
         std::dynamic_pointer_cast<Neato::OpenGLShader>(m_flatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
-
-        NEATO_TRACE("Color: {0}, {1}, {2}", m_SquareColor.x, m_SquareColor.y, m_SquareColor.z);
 
         for (int j = 0; j < 20; ++j) {
             for (int i = 0; i < 20; ++i) {
@@ -172,9 +167,8 @@ public:
         ImGui::End();
     }
 
-    void OnEvent(Neato::Event& event) override
-    {
-        m_CameraController.OnEvent(event);
+    void OnEvent(Neato::Event& e) override {
+        m_CameraController.OnEvent(e);
     }
 
 private:
@@ -203,7 +197,6 @@ public:
     }
 };
 
-Neato::Application* Neato::CreateApplication()
-{
+Neato::Application* Neato::CreateApplication() {
     return new Sandbox();
 }

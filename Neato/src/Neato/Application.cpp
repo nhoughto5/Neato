@@ -7,76 +7,81 @@
 
 namespace Neato {
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
-    
-	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
-    {
-		NEATO_CORE_ASSERT(!s_Instance, "Multiple application instances");
-		s_Instance = this;
-		m_Window = std::unique_ptr<Window>(Window::Create());
-		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+    Application* Application::s_Instance = nullptr;
 
-		Renderer::Init();
+    Application::Application() {
+        NEATO_CORE_ASSERT(!s_Instance, "Multiple application instances");
+        s_Instance = this;
+        m_Window = std::unique_ptr<Window>(Window::Create());
+        m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
-		m_ImGuiLayer = new ImGuiLayer();
-		PushOverlay(m_ImGuiLayer);
-	}
+        Renderer::Init();
 
-    Application::~Application()
-    {
+        m_ImGuiLayer = new ImGuiLayer();
+        PushOverlay(m_ImGuiLayer);
+    }
+
+    Application::~Application() {
     }
 
     void Application::Run() {
-        
-		while (m_Running)
-		{
-			float time = (float)glfwGetTime();
-			TimeStep timestep = time - m_LastFrameTime;
-			m_LastFrameTime = time;
-			for (Layer* layer : m_LayerStack)
-			{
-				layer->OnUpdate(timestep);
-			}
 
-			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
-			{
-				layer->OnImGuiRender();
-			}
-			m_ImGuiLayer->End();
+        while (m_Running) {
+            float time = (float)glfwGetTime();
+            TimeStep timestep = time - m_LastFrameTime;
+            m_LastFrameTime = time;
 
-			m_Window->OnUpdate();
-		}
+            if (!m_Minimized) {
+                for (Layer* layer : m_LayerStack) {
+                    layer->OnUpdate(timestep);
+                }
+            }
+
+            m_ImGuiLayer->Begin();
+            for (Layer* layer : m_LayerStack) {
+                layer->OnImGuiRender();
+            }
+            m_ImGuiLayer->End();
+
+            m_Window->OnUpdate();
+        }
     }
 
-	void Application::OnEvent(Event & e)
-	{
-		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); ) 
-		{
-			(*--it)->OnEvent(e);
-			if (e.Handled) break;
-		}
-	}
+    void Application::OnEvent(Event& e) {
+        EventDispatcher dispatcher(e);
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+        dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
+        for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); ) {
+            (*--it)->OnEvent(e);
+            if (e.Handled) break;
+        }
+    }
 
-	void Application::PushLayer(Layer* layer)
-	{
-		m_LayerStack.PushLayer(layer);
-		layer->OnAttach();
-	}
+    void Application::PushLayer(Layer* layer) {
+        m_LayerStack.PushLayer(layer);
+        layer->OnAttach();
+    }
 
-	void Application::PushOverlay(Layer* layer)
-	{
-		m_LayerStack.PushOverlay(layer);
-		layer->OnAttach();
-	}
+    void Application::PushOverlay(Layer* layer) {
+        m_LayerStack.PushOverlay(layer);
+        layer->OnAttach();
+    }
 
-	bool Application::OnWindowClose(WindowCloseEvent& e)
-	{
-		m_Running = false;
-		return true;
-	}
+    bool Application::OnWindowClose(WindowCloseEvent& e) {
+        m_Running = false;
+        return true;
+    }
+
+    bool Application::OnWindowResize(WindowResizeEvent& e) {
+        if (e.GetWidth() == 0 || e.GetHeight() == 0) {
+            m_Minimized = true;
+            return false;
+        }
+
+        m_Minimized = false;
+        Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+        return false;
+    }
 }
 

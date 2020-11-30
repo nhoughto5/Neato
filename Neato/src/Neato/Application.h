@@ -27,6 +27,7 @@ namespace Neato {
 		inline Window& GetWindow() { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
 	private:
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
@@ -34,6 +35,7 @@ namespace Neato {
 		LayerStack m_LayerStack;
 		static Application* s_Instance;
 		float m_LastFrameTime = 0.0f;
+		bool m_Minimized = false;
 	};
 
     // To be defined in client
